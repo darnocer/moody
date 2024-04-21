@@ -9,8 +9,8 @@ const Header: React.FC = () => {
 
   let left = (
     <div className="left">
-      <Link href="/" className="bold" data-active={isActive("/")}>
-        Feed
+      <Link href="/" passHref>
+        <a className={`bold ${isActive("/") ? "active" : ""}`}>Feed</a>
       </Link>
       <style jsx>{`
         .bold {
