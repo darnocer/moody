@@ -68,7 +68,7 @@ model VerificationToken {
 }
 
 model Mood {
-  id          String      @id @default(cuid())
+  id          Int      @id
   mood_level  Int         @unique
   name        String
   moodEntries MoodEntry[] @relation("MoodToMoodEntry")
@@ -81,14 +81,14 @@ model MoodEntry {
   userId        String
   timestamp     DateTime             @default(now())
   mood          Mood                @relation("MoodToMoodEntry", fields: [moodId], references: [id])
-  moodId        String
+  moodId        Int
   journal_entry String?
   influences    MoodEntryInfluence[]
   feelings      MoodEntryFeeling[]
 }
 
 model Influence {
-  id          String               @id @default(cuid())
+  id          Int              @id @default(autoincrement())
   name        String
   moodEntries MoodEntryInfluence[]
 }
@@ -98,7 +98,7 @@ model MoodEntryInfluence {
   moodEntry   MoodEntry @relation(fields: [moodEntryId], references: [id])
   moodEntryId String
   influence   Influence @relation(fields: [influenceId], references: [id])
-  influenceId String
+  influenceId Int
 
   @@unique([moodEntryId, influenceId])
 }
@@ -106,7 +106,7 @@ model MoodEntryInfluence {
 model Feeling {
   id          String             @id @default(cuid())
   mood        Mood               @relation("MoodToFeeling", fields: [moodId], references: [id])
-  moodId      String
+  moodId      Int
   name        String
   description String?
   moodEntries MoodEntryFeeling[]
