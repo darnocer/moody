@@ -71,8 +71,8 @@ model Mood {
   id          String      @id @default(cuid())
   mood_level  Int         @unique
   name        String
-  moodEntries MoodEntry[]
-  feelings    Feeling[]
+  moodEntries MoodEntry[] @relation("MoodToMoodEntry")
+  feelings    Feeling[] @relation("MoodToFeeling")
 }
 
 model MoodEntry {
@@ -80,7 +80,7 @@ model MoodEntry {
   user          User                 @relation(fields: [userId], references: [id])
   userId        String
   timestamp     DateTime             @default(now())
-  mood          Mood                 @relation(fields: [moodId], references: [id])
+  mood          Mood                @relation("MoodToMoodEntry", fields: [moodId], references: [id])
   moodId        String
   journal_entry String?
   influences    MoodEntryInfluence[]
@@ -105,7 +105,7 @@ model MoodEntryInfluence {
 
 model Feeling {
   id          String             @id @default(cuid())
-  mood        Mood               @relation(fields: [moodId], references: [id])
+  mood        Mood               @relation("MoodToFeeling", fields: [moodId], references: [id])
   moodId      String
   name        String
   description String?
