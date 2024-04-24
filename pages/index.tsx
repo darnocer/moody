@@ -5,6 +5,7 @@ import Layout from "../components/Layout";
 import MoodSelection from "../components/MoodSelection";
 import JournalEntry from "../components/JournalEntry";
 import InfluenceSelection from "../components/InfluenceSelection";
+import FeelingSelection from "../components/FeelingSelection";
 import prisma from "../lib/prisma";
 
 export type MoodProps = {
@@ -14,6 +15,11 @@ export type MoodProps = {
 };
 
 export type InfluenceProps = {
+  id: string;
+  name: string;
+};
+
+export type FeelingProps = {
   id: string;
   name: string;
 };
@@ -47,6 +53,7 @@ const Blog: React.FC<Props> = (props) => {
   const [selectedInfluences, setSelectedInfluences] = useState<
     InfluenceProps[]
   >([]);
+  const [selectedFeelings, setSelectedFeelings] = useState<FeelingProps[]>([]);
 
   const handleMoodSelection = (mood: MoodProps) => {
     setSelectedMood(mood);
@@ -54,6 +61,10 @@ const Blog: React.FC<Props> = (props) => {
 
   const handleInfluenceSelection = (influences: InfluenceProps[]) => {
     setSelectedInfluences(influences);
+  };
+
+  const handleFeelingSelection = (feelings: FeelingProps[]) => {
+    setSelectedFeelings(feelings);
   };
 
   const handleSubmit = async () => {
@@ -67,6 +78,7 @@ const Blog: React.FC<Props> = (props) => {
           moodId: selectedMood.id,
           journalEntry,
           influenceIds: selectedInfluences.map((influence) => influence.id),
+          feelingIds: selectedFeelings.map((feeling) => feeling.id),
         }),
       });
       if (response.ok) {
@@ -74,6 +86,7 @@ const Blog: React.FC<Props> = (props) => {
         setSelectedMood(null);
         setJournalEntry("");
         setSelectedInfluences([]);
+        setSelectedFeelings([]);
       } else {
         console.error("Failed to create mood entry");
       }
@@ -100,6 +113,10 @@ const Blog: React.FC<Props> = (props) => {
               <InfluenceSelection
                 influences={props.influences}
                 onInfluenceSelection={handleInfluenceSelection}
+              />
+              <FeelingSelection
+                selectedMoodId={selectedMood.mood_level}
+                onFeelingSelection={handleFeelingSelection}
               />
               <button onClick={handleSubmit}>Submit</button>
             </>

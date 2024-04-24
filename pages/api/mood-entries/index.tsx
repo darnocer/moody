@@ -16,10 +16,11 @@ export default async function handler(
       return res.status(401).json({ message: "Unauthorized" });
     }
 
-    const { moodId, journalEntry, influenceIds } = req.body;
+    const { moodId, journalEntry, influenceIds, feelingIds } = req.body;
     console.log("Mood ID:", moodId);
     console.log("Journal Entry:", journalEntry);
     console.log("Influence IDs:", influenceIds);
+    console.log("Feeling IDs:", feelingIds);
 
     try {
       const moodEntry = await prisma.moodEntry.create({
@@ -32,9 +33,17 @@ export default async function handler(
               influence: { connect: { id } },
             })),
           },
+          feelings: {
+            create: feelingIds.map((id: string) => ({
+              feeling: { connect: { id } },
+            })),
+          },
+        },
+        include: {
+          feelings: true, // Include the feelings relation
         },
       });
-      res.status(201).json(moodEntry);
+      res.status(201).json({ moodEntry });
     } catch (error) {
       console.error("Error creating mood entry:", error);
       res.status(500).json({ message: "Internal Server Error" });
