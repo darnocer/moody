@@ -2,12 +2,11 @@
   "name": "hello-next",
   "version": "1.0.0",
   "description": "",
-  "type": "module",
   "scripts": {
     "dev": "next",
     "build": "next build",
     "start": "next start",
-    "prisma:seed": "ts-node prisma/seeds.mts"
+    "prisma:seed": "ts-node --loader=ts-node/esm prisma/seeds.mts"
   },
   "keywords": [],
   "author": "",
