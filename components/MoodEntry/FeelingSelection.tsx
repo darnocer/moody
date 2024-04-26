@@ -5,12 +5,10 @@ import { FeelingProps } from "../../pages/index";
 type Props = {
   selectedMoodId: number;
   onFeelingSelection: (feelings: FeelingProps[]) => void;
+  heading: string;
 };
 
-const FeelingSelection: React.FC<Props> = ({
-  selectedMoodId,
-  onFeelingSelection,
-}) => {
+const FeelingSelection: React.FC<Props> = (props) => {
   const [feelings, setFeelings] = useState<FeelingProps[]>([]);
   const [selectedFeelings, setSelectedFeelings] = useState<FeelingProps[]>([]);
 
@@ -18,7 +16,7 @@ const FeelingSelection: React.FC<Props> = ({
     const fetchFeelings = async () => {
       try {
         const response = await fetch(
-          `/api/mood-entries/feelings?moodId=${selectedMoodId}`
+          `/api/mood-entries/feelings?moodId=${props.selectedMoodId}`
         );
         const data = await response.json();
         setFeelings(data);
@@ -27,10 +25,10 @@ const FeelingSelection: React.FC<Props> = ({
       }
     };
 
-    if (selectedMoodId) {
+    if (props.selectedMoodId) {
       fetchFeelings();
     }
-  }, [selectedMoodId]);
+  }, [props.selectedMoodId]);
 
   const handleFeelingToggle = (feeling: FeelingProps) => {
     const index = selectedFeelings.findIndex((f) => f.id === feeling.id);
@@ -39,26 +37,27 @@ const FeelingSelection: React.FC<Props> = ({
     } else {
       setSelectedFeelings([...selectedFeelings, feeling]);
     }
-    onFeelingSelection(selectedFeelings);
+    props.onFeelingSelection(selectedFeelings);
   };
 
   return (
     <div>
-      <h2>Select Feelings</h2>
-      <ul>
+      <h2 className="text-2xl mb-4">{props.heading}</h2>
+      <div className="grid grid-cols-4 gap-4">
         {feelings.map((feeling) => (
-          <li key={feeling.id}>
-            <label>
-              <input
-                type="checkbox"
-                checked={selectedFeelings.some((f) => f.id === feeling.id)}
-                onChange={() => handleFeelingToggle(feeling)}
-              />
-              {feeling.name}
-            </label>
-          </li>
+          <button
+            key={feeling.id}
+            className={`btn ${
+              selectedFeelings.some((f) => f.id === feeling.id)
+                ? "btn-primary"
+                : "btn-neutral"
+            }`}
+            onClick={() => handleFeelingToggle(feeling)}
+          >
+            {feeling.name}
+          </button>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };

@@ -5,6 +5,7 @@ import { InfluenceProps } from "../../pages/index";
 type Props = {
   influences: InfluenceProps[];
   onInfluenceSelection: (selectedInfluences: InfluenceProps[]) => void;
+  heading: string;
 };
 
 const InfluenceSelection: React.FC<Props> = (props) => {
@@ -26,21 +27,22 @@ const InfluenceSelection: React.FC<Props> = (props) => {
 
   return (
     <div>
-      <h2>Select Influences</h2>
-      <ul>
+      <h2 className="text-2xl mb-4">{props.heading}</h2>
+      <div className="grid grid-cols-4 gap-4">
         {props.influences.map((influence) => (
-          <li key={influence.id}>
-            <label>
-              <input
-                type="checkbox"
-                checked={selectedInfluences.some((i) => i.id === influence.id)}
-                onChange={() => handleInfluenceToggle(influence)}
-              />
-              {influence.name}
-            </label>
-          </li>
+          <button
+            key={influence.id}
+            className={`btn ${
+              selectedInfluences.some((i) => i.id === influence.id)
+                ? "btn-primary"
+                : "btn-neutral"
+            }`}
+            onClick={() => handleInfluenceToggle(influence)}
+          >
+            {influence.name}
+          </button>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };

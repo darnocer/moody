@@ -16,7 +16,13 @@
     "incremental": true
   },
   "exclude": ["node_modules"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "prisma/seeds.mts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "prisma/seeds.mts",
+    "data/moodEntries.js"
+  ],
   "ts-node": {
     "esm": true,
     "compilerOptions": {

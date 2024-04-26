@@ -6,6 +6,7 @@ import MoodSelection from "../components/MoodEntry/MoodSelection";
 import JournalEntry from "../components/MoodEntry/JournalEntry";
 import InfluenceSelection from "../components/MoodEntry/InfluenceSelection";
 import FeelingSelection from "../components/MoodEntry/FeelingSelection";
+import moodEntries from "../data/moodEntries";
 import prisma from "../lib/prisma";
 
 export type MoodProps = {
@@ -26,18 +27,11 @@ export type FeelingProps = {
 
 export const getStaticProps: GetStaticProps = async () => {
   const moods = await prisma.mood.findMany({
-    orderBy: {
-      mood_level: "asc",
-    },
+    orderBy: { mood_level: "asc" },
   });
-
   const influences = await prisma.influence.findMany();
-
   return {
-    props: {
-      moods,
-      influences,
-    },
+    props: { moods, influences },
     revalidate: 10,
   };
 };
@@ -54,6 +48,8 @@ const Blog: React.FC<Props> = (props) => {
     InfluenceProps[]
   >([]);
   const [selectedFeelings, setSelectedFeelings] = useState<FeelingProps[]>([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   const handleMoodSelection = (mood: MoodProps) => {
     setSelectedMood(mood);
@@ -69,11 +65,14 @@ const Blog: React.FC<Props> = (props) => {
 
   const handleSubmit = async () => {
     if (!selectedMood) return;
+    setIsSubmitting(true);
 
     try {
       const response = await fetch("/api/mood-entries", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           moodId: selectedMood.id,
           journalEntry,
@@ -81,48 +80,78 @@ const Blog: React.FC<Props> = (props) => {
           feelingIds: selectedFeelings.map((feeling) => feeling.id),
         }),
       });
+
       if (response.ok) {
         console.log("Mood entry created");
         setSelectedMood(null);
         setJournalEntry("");
         setSelectedInfluences([]);
         setSelectedFeelings([]);
+        setShowSuccessMessage(true);
+        setTimeout(() => {
+          setShowSuccessMessage(false);
+        }, 3000);
       } else {
         console.error("Failed to create mood entry");
       }
     } catch (error) {
       console.error("Error creating mood entry:", error);
     }
+
+    setIsSubmitting(false);
   };
 
   return (
     <Layout>
-      <div className="page">
-        <h1 className="text-h1 text-primary-500">Select your mood</h1>
+      <div className="page relative">
         <main>
+          <h1 className="text-h1 text-primary-500">{moodEntries.heading}</h1>
           <MoodSelection
             moods={props.moods}
             onMoodSelection={handleMoodSelection}
+            heading={moodEntries.mood.heading}
+            selectedMood={selectedMood}
           />
           {selectedMood && (
             <>
               <JournalEntry
                 selectedMood={selectedMood}
                 onJournalEntryChange={setJournalEntry}
+                textBefore={moodEntries.journal.linkTextBefore}
+                textAfter={moodEntries.journal.linkTextAfter}
               />
               <InfluenceSelection
                 influences={props.influences}
                 onInfluenceSelection={handleInfluenceSelection}
+                heading={moodEntries.influences.heading}
               />
               <FeelingSelection
                 selectedMoodId={selectedMood.mood_level}
                 onFeelingSelection={handleFeelingSelection}
+                heading={moodEntries.feelings.heading}
               />
-              <button onClick={handleSubmit}>Submit</button>
+              <button
+                onClick={handleSubmit}
+                className={`btn btn-success ${isSubmitting ? "loading" : ""}`}
+                disabled={isSubmitting}
+              >
+                {isSubmitting
+                  ? moodEntries.submit.loadingText
+                  : moodEntries.submit.button}
+              </button>
             </>
           )}
         </main>
       </div>
+      {showSuccessMessage && (
+        <div className="toast toast-top toast-center">
+          <div className="alert alert-success">
+            <div>
+              <span>{moodEntries.submit.successMessage}</span>
+            </div>
+          </div>
+        </div>
+      )}
     </Layout>
   );
 };

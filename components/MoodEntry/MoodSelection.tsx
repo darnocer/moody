@@ -1,39 +1,73 @@
 // components/MoodSelection.tsx
 import React from "react";
 import { MoodProps } from "../../pages/index";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faFaceGrin,
+  faFaceSmile,
+  faFaceMeh,
+  faFaceFrown,
+  faFaceSadTear,
+} from "@fortawesome/free-regular-svg-icons";
 
 type Props = {
   moods: MoodProps[];
   onMoodSelection: (mood: MoodProps) => void;
+  heading: string;
+  selectedMood: MoodProps | null;
 };
 
 const MoodSelection: React.FC<Props> = (props) => {
+  const moodColors = [
+    "bg-secondary-600",
+    "bg-secondary-500",
+    "bg-lime-400",
+    "bg-primary-500",
+    "bg-primary-600",
+  ];
+
+  const moodIcons = [
+    faFaceSadTear,
+    faFaceFrown,
+    faFaceMeh,
+    faFaceSmile,
+    faFaceGrin,
+  ];
+
   return (
     <div>
-      <h2>Select Your Mood</h2>
-      <ul>
-        {props.moods.map((mood) => (
-          <li key={mood.id}>
-            <button onClick={() => props.onMoodSelection(mood)}>
-              {mood.mood_level} - {mood.name}
+      <h2 className="text-2xl mb-4">{props.heading}</h2>
+      <div className="flex space-x-4">
+        {props.moods.map((mood, index) => (
+          <div key={mood.id} className="flex flex-col items-center">
+            <button
+              className={`relative w-12 h-12 rounded-full focus:outline-none ${
+                moodColors[mood.mood_level - 1]
+              } ${
+                props.selectedMood && props.selectedMood.id !== mood.id
+                  ? "opacity-50"
+                  : ""
+              }`}
+              onClick={() => props.onMoodSelection(mood)}
+            >
+              <FontAwesomeIcon
+                icon={moodIcons[mood.mood_level - 1]}
+                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12"
+              />
+              <span className="sr-only">{mood.name}</span>
             </button>
-          </li>
+            <span
+              className={`text-xs uppercase mt-2 ${
+                props.selectedMood && props.selectedMood.id !== mood.id
+                  ? "opacity-50"
+                  : ""
+              }`}
+            >
+              {mood.name}
+            </span>
+          </div>
         ))}
-      </ul>
-      <style jsx>{`
-        ul {
-          list-style-type: none;
-          padding: 0;
-        }
-        li {
-          margin-bottom: 0.5rem;
-        }
-        button {
-          padding: 0.5rem 1rem;
-          font-size: 1rem;
-          cursor: pointer;
-        }
-      `}</style>
+      </div>
     </div>
   );
 };
