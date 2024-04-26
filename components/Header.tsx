@@ -10,191 +10,58 @@ const Header: React.FC = () => {
 
   const { data: session, status } = useSession();
 
-  let left = (
-    <div className="left">
-      <Link href="/" className="bold" data-active={isActive("/")}>
-        Feed
-      </Link>
-      <style jsx>{`
-        .bold {
-          font-weight: bold;
-        }
-
-        a {
-          text-decoration: none;
-          color: var(--geist-foreground);
-          display: inline-block;
-        }
-
-        .left a[data-active="true"] {
-          color: gray;
-        }
-
-        a + a {
-          margin-left: 1rem;
-        }
-      `}</style>
-    </div>
-  );
-
-  let right = null;
-
-  if (status === "loading") {
-    left = (
-      <div className="left">
-        <Link href="/" className="bold" data-active={isActive("/")}>
-          Feed
-        </Link>
-        <style jsx>{`
-          .bold {
-            font-weight: bold;
-          }
-
-          a {
-            text-decoration: none;
-            color: var(--geist-foreground);
-            display: inline-block;
-          }
-
-          .left a[data-active="true"] {
-            color: gray;
-          }
-
-          a + a {
-            margin-left: 1rem;
-          }
-        `}</style>
-      </div>
-    );
-    right = (
-      <div className="right">
-        <p>Validating session ...</p>
-        <style jsx>{`
-          .right {
-            margin-left: auto;
-          }
-        `}</style>
-      </div>
-    );
-  }
-
-  if (!session) {
-    right = (
-      <div className="right">
-        <Link href="/api/auth/signin" data-active={isActive("/signup")}>
-          Log in
-        </Link>
-        <style jsx>{`
-          a {
-            text-decoration: none;
-            color: var(--geist-foreground);
-            display: inline-block;
-          }
-
-          a + a {
-            margin-left: 1rem;
-          }
-
-          .right {
-            margin-left: auto;
-          }
-
-          .right a {
-            border: 1px solid var(--geist-foreground);
-            padding: 0.5rem 1rem;
-            border-radius: 3px;
-          }
-        `}</style>
-      </div>
-    );
-  }
-
-  if (session) {
-    left = (
-      <div className="left">
-        <Link href="/" className="bold" data-active={isActive("/")}>
-          Feed
-        </Link>
-        <Link href="/drafts" data-active={isActive("/drafts")}>
-          My Drafts
-        </Link>
-        <style jsx>{`
-          .bold {
-            font-weight: bold;
-          }
-
-          a {
-            text-decoration: none;
-            color: var(--geist-foreground);
-            display: inline-block;
-          }
-
-          .left a[data-active="true"] {
-            color: gray;
-          }
-
-          a + a {
-            margin-left: 1rem;
-          }
-        `}</style>
-      </div>
-    );
-    right = (
-      <div className="right">
-        <p>
-          {session.user.name} ({session.user.email})
-        </p>
-        <Link href="/create">
-          <button>New post</button>
-        </Link>
-        <button onClick={() => signOut()}>Log out</button>
-        <style jsx>{`
-          a {
-            text-decoration: none;
-            color: var(--geist-foreground);
-            display: inline-block;
-          }
-
-          p {
-            display: inline-block;
-            font-size: 13px;
-            padding-right: 1rem;
-          }
-
-          a + a {
-            margin-left: 1rem;
-          }
-
-          .right {
-            margin-left: auto;
-          }
-
-          .right a {
-            border: 1px solid var(--geist-foreground);
-            padding: 0.5rem 1rem;
-            border-radius: 3px;
-          }
-
-          button {
-            border: none;
-          }
-        `}</style>
-      </div>
-    );
-  }
-
   return (
-    <nav>
-      {left}
-      {right}
-      <style jsx>{`
-        nav {
-          display: flex;
-          padding: 2rem;
-          align-items: center;
-        }
-      `}</style>
-    </nav>
+    <header className="bg-white shadow">
+      <nav className="container mx-auto px-6 py-4">
+        <div className="flex justify-between items-center">
+          <div>
+            {session && (
+              <div className="space-x-4">
+                <Link
+                  href="/"
+                  className={`text-gray-800 hover:text-gray-600 ${
+                    isActive("/") ? "font-bold" : ""
+                  }`}
+                >
+                  New Entry
+                </Link>
+                <Link
+                  href="/entries"
+                  className={`text-gray-800 hover:text-gray-600 ${
+                    isActive("/entries") ? "font-bold" : ""
+                  }`}
+                >
+                  Mood Entries
+                </Link>
+              </div>
+            )}
+          </div>
+          <div>
+            {!session && (
+              <Link
+                href="/api/auth/signin"
+                className="text-gray-800 hover:text-gray-600"
+              >
+                Log In
+              </Link>
+            )}
+            {session && (
+              <div className="flex items-center space-x-4">
+                <span className="text-gray-600">
+                  {session.user.name} ({session.user.email})
+                </span>
+                <button
+                  onClick={() => signOut()}
+                  className="text-gray-800 hover:text-gray-600"
+                >
+                  Log Out
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      </nav>
+    </header>
   );
 };
 
