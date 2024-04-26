@@ -1,6 +1,6 @@
 // components/InfluenceSelection.tsx
 import React, { useState } from "react";
-import { InfluenceProps } from "../pages/index";
+import { InfluenceProps } from "../../pages/index";
 
 type Props = {
   influences: InfluenceProps[];

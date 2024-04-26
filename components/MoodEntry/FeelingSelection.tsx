@@ -1,6 +1,6 @@
 // components/FeelingSelection.tsx
 import React, { useState, useEffect } from "react";
-import { FeelingProps } from "../pages/index";
+import { FeelingProps } from "../../pages/index";
 
 type Props = {
   selectedMoodId: number;

@@ -1,6 +1,6 @@
 // components/JournalEntry.tsx
 import React from "react";
-import { MoodProps } from "../pages/index";
+import { MoodProps } from "../../pages/index";
 
 type Props = {
   selectedMood: MoodProps;
