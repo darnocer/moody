@@ -2,10 +2,10 @@
 import React, { useState } from "react";
 import { GetStaticProps } from "next";
 import Layout from "../components/Layout";
-import MoodSelection from "../components/MoodSelection";
-import JournalEntry from "../components/JournalEntry";
-import InfluenceSelection from "../components/InfluenceSelection";
-import FeelingSelection from "../components/FeelingSelection";
+import MoodSelection from "../components/MoodEntry/MoodSelection";
+import JournalEntry from "../components/MoodEntry/JournalEntry";
+import InfluenceSelection from "../components/MoodEntry/InfluenceSelection";
+import FeelingSelection from "../components/MoodEntry/FeelingSelection";
 import prisma from "../lib/prisma";
 
 export type MoodProps = {
