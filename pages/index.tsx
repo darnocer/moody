@@ -41,7 +41,7 @@ type Props = {
   influences: InfluenceProps[];
 };
 
-const Blog: React.FC<Props> = (props) => {
+const MoodEntry: React.FC<Props> = (props) => {
   const [selectedMood, setSelectedMood] = useState<MoodProps | null>(null);
   const [journalEntry, setJournalEntry] = useState("");
   const [selectedInfluences, setSelectedInfluences] = useState<
@@ -156,4 +156,4 @@ const Blog: React.FC<Props> = (props) => {
   );
 };
 
-export default Blog;
+export default MoodEntry;
