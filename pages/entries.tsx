@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-
 import Layout from "../components/Layout";
 
 function MoodEntriesList() {
@@ -11,30 +10,36 @@ function MoodEntriesList() {
       const data = await response.json();
       setMoodEntries(data);
     };
-
     fetchMoodEntries();
   }, []);
 
   return (
     <Layout>
       <h1 className="text-h1">Mood Entries</h1>
-      <ul>
-        {moodEntries.map((entry) => (
-          <li key={entry.id}>
-            <p>Timestamp: {new Date(entry.timestamp).toLocaleString()}</p>
-            <p>Mood: {entry.mood.name}</p>
-            <p>
-              Influences:{" "}
-              {entry.influences.map((inf) => inf.influence.name).join(", ")}
-            </p>
-            <p>
-              Feelings:{" "}
-              {entry.feelings.map((feel) => feel.feeling.name).join(", ")}
-            </p>
-            {entry.journal_entry && <p>Journal Entry: {entry.journal_entry}</p>}
-          </li>
+      <div className="space-y-4">
+        {moodEntries.map((entry, index) => (
+          <div key={entry.id} className="collapse collapse-arrow bg-base-100">
+            <input type="radio" name="mood-entry-accordion" />
+            <div className="collapse-title text-xl font-medium">
+              {new Date(entry.timestamp).toLocaleString()}
+            </div>
+            <div className="collapse-content">
+              <p>Mood: {entry.mood.name}</p>
+              <p>
+                Influences:{" "}
+                {entry.influences.map((inf) => inf.influence.name).join(", ")}
+              </p>
+              <p>
+                Feelings:{" "}
+                {entry.feelings.map((feel) => feel.feeling.name).join(", ")}
+              </p>
+              {entry.journal_entry && (
+                <p>Journal Entry: {entry.journal_entry}</p>
+              )}
+            </div>
+          </div>
         ))}
-      </ul>
+      </div>
     </Layout>
   );
 }
