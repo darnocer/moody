@@ -26,6 +26,14 @@ const Header: React.FC = () => {
                   New Entry
                 </Link>
                 <Link
+                  href="/factors"
+                  className={`text-gray-800 hover:text-gray-600 ${
+                    isActive("/factors") ? "font-bold" : ""
+                  }`}
+                >
+                  Additional Factors
+                </Link>
+                <Link
                   href="/entries"
                   className={`text-gray-800 hover:text-gray-600 ${
                     isActive("/entries") ? "font-bold" : ""
