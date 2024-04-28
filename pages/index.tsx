@@ -1,13 +1,16 @@
 // pages/index.tsx
 import React, { useState } from "react";
 import { GetStaticProps } from "next";
+import prisma from "../lib/prisma";
+
+import moodEntries from "../data/moodEntries";
+
 import Layout from "../components/Layout";
+
 import MoodSelection from "../components/MoodEntry/MoodSelection";
 import JournalEntry from "../components/MoodEntry/JournalEntry";
 import InfluenceSelection from "../components/MoodEntry/InfluenceSelection";
 import FeelingSelection from "../components/MoodEntry/FeelingSelection";
-import moodEntries from "../data/moodEntries";
-import prisma from "../lib/prisma";
 
 export type MoodProps = {
   id: string;
@@ -104,10 +107,12 @@ const MoodEntry: React.FC<Props> = (props) => {
 
   return (
     <Layout>
-      <div className="page relative">
-        <div className="max-w-xl mx-auto">
-          <main>
-            <h1 className="text-h1 text-primary-500">{moodEntries.heading}</h1>
+      <div className="page relative max-w-xl mx-auto">
+        <main className="card shadow-xl bg-neutral-100">
+          <div className="card-body">
+            {/* <h1 className="card-title text-h1 text-primary-500">
+              {moodEntries.heading}
+            </h1> */}
             <MoodSelection
               moods={props.moods}
               onMoodSelection={handleMoodSelection}
@@ -143,18 +148,18 @@ const MoodEntry: React.FC<Props> = (props) => {
                 </button>
               </>
             )}
-          </main>
-        </div>
-        {showSuccessMessage && (
-          <div className="toast toast-top toast-center">
-            <div className="alert alert-success">
-              <div>
-                <span>{moodEntries.submit.successMessage}</span>
-              </div>
+          </div>
+        </main>
+      </div>
+      {showSuccessMessage && (
+        <div className="toast toast-top toast-center">
+          <div className="alert alert-success">
+            <div>
+              <span>{moodEntries.submit.successMessage}</span>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </Layout>
   );
 };

@@ -32,8 +32,8 @@ const InfluenceSelection: React.FC<Props> = (props) => {
   };
 
   return (
-    <div>
-      <h2 className="text-2xl my-4">{props.heading}</h2>
+    <div className="text-center">
+      <h2 className="text-2xl my-6">{props.heading}</h2>
       <div className="grid grid-cols-2 gap-4">
         {props.influences.map((influence) => (
           <button
@@ -47,7 +47,7 @@ const InfluenceSelection: React.FC<Props> = (props) => {
           >
             <FontAwesomeIcon
               icon={["fas", influence.icon as IconName]}
-              className="w-4 h-4"
+              className="w-5 h-5"
             />
             <span className="whitespace-nowrap">{influence.name}</span>
           </button>

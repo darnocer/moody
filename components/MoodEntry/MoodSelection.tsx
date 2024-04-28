@@ -1,5 +1,7 @@
 // components/MoodSelection.tsx
 import React from "react";
+import CurrentDateTime from "./CurrentDateTime";
+
 import { MoodProps } from "../../pages/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -35,8 +37,9 @@ const MoodSelection: React.FC<Props> = (props) => {
   ];
 
   return (
-    <div>
-      <h2 className="text-2xl my-4">{props.heading}</h2>
+    <div className="text-center">
+      <h2 className="text-2xl my-6">{props.heading}</h2>
+      <CurrentDateTime />
       <div className="flex space-x-4 justify-center">
         {props.moods.map((mood, index) => (
           <div key={mood.id} className="flex flex-col items-center p-1">
