@@ -48,7 +48,7 @@ const MoodSelection: React.FC<Props> = (props) => {
                 moodColors[mood.mood_level - 1]
               } ${
                 props.selectedMood && props.selectedMood.id !== mood.id
-                  ? "opacity-50"
+                  ? "opacity-10"
                   : ""
               }`}
               onClick={() => props.onMoodSelection(mood)}
@@ -62,7 +62,7 @@ const MoodSelection: React.FC<Props> = (props) => {
             <span
               className={`text-xs uppercase mt-2 ${
                 props.selectedMood && props.selectedMood.id !== mood.id
-                  ? "opacity-50"
+                  ? "opacity-10"
                   : ""
               }`}
             >
