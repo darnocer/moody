@@ -1,5 +1,5 @@
 const moodEntries = {
-  heading: "New Mood Entry",
+  heading: "Add New Mood Entry",
   mood: {
     heading: "How are you feeling right now?",
   },
