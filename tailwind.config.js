@@ -13,7 +13,7 @@ module.exports = {
         secondary: colors.cyan,
       },
       fontFamily: {
-        sans: ["Inter", ...defaultTheme.fontFamily.sans],
+        sans: ["Lexend", ...defaultTheme.fontFamily.sans],
       },
       fontSize: {
         h1: ["3rem", { lineHeight: "1.2" }],
