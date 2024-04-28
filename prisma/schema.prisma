@@ -90,6 +90,7 @@ model MoodEntry {
 model Influence {
   id          Int              @id @default(autoincrement())
   name        String
+  icon        String?
   moodEntries MoodEntryInfluence[]
 }
 

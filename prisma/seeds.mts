@@ -18,14 +18,14 @@ async function main() {
   console.log("Moods seeded successfully!");
 
   const influences = [
-    { id: 1, name: "Family" },
-    { id: 2, name: "Relationship" },
-    { id: 3, name: "Friends" },
-    { id: 4, name: "Spirituality" },
-    { id: 5, name: "Health" },
-    { id: 6, name: "Work" },
-    { id: 7, name: "Studies" },
-    { id: 8, name: "Finances" },
+    { id: 1, name: "Family", icon: "people-roof" },
+    { id: 2, name: "Relationship", icon: "heart" },
+    { id: 3, name: "Friends", icon: "uder-group" },
+    { id: 4, name: "Spirituality", icon: "hands-praying" },
+    { id: 5, name: "Health", icon: "house-medical" },
+    { id: 6, name: "Work", icon: "briefcase" },
+    { id: 7, name: "Studies", icon: "book-open" },
+    { id: 8, name: "Finances", icon: "dollar-sign" },
   ];
 
   for (const influence of influences) {

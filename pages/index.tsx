@@ -18,6 +18,7 @@ export type MoodProps = {
 export type InfluenceProps = {
   id: string;
   name: string;
+  icon: string;
 };
 
 export type FeelingProps = {

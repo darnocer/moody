@@ -2,6 +2,12 @@
 import React, { useState } from "react";
 import { InfluenceProps } from "../../pages/index";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { library, IconName } from "@fortawesome/fontawesome-svg-core";
+import { fas } from "@fortawesome/free-solid-svg-icons";
+
+library.add(fas);
+
 type Props = {
   influences: InfluenceProps[];
   onInfluenceSelection: (selectedInfluences: InfluenceProps[]) => void;
@@ -39,6 +45,7 @@ const InfluenceSelection: React.FC<Props> = (props) => {
             }`}
             onClick={() => handleInfluenceToggle(influence)}
           >
+            <FontAwesomeIcon icon={["fas", influence.icon as IconName]} />
             {influence.name}
           </button>
         ))}
