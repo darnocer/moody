@@ -1,7 +1,7 @@
 const moodEntries = {
   heading: "New Mood Entry",
   mood: {
-    heading: "Select your mood",
+    heading: "How are you feeling right now?",
   },
   journal: {
     linkTextBefore: "Add note",
