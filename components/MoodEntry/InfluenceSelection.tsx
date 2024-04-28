@@ -33,20 +33,23 @@ const InfluenceSelection: React.FC<Props> = (props) => {
 
   return (
     <div>
-      <h2 className="text-2xl mb-4">{props.heading}</h2>
-      <div className="grid grid-cols-4 gap-4">
+      <h2 className="text-2xl my-4">{props.heading}</h2>
+      <div className="grid grid-cols-2 gap-4">
         {props.influences.map((influence) => (
           <button
             key={influence.id}
-            className={`btn ${
+            className={`btn flex items-center space-x-2 ${
               selectedInfluences.some((i) => i.id === influence.id)
                 ? "btn-primary"
                 : "btn-neutral"
             }`}
             onClick={() => handleInfluenceToggle(influence)}
           >
-            <FontAwesomeIcon icon={["fas", influence.icon as IconName]} />
-            {influence.name}
+            <FontAwesomeIcon
+              icon={["fas", influence.icon as IconName]}
+              className="w-4 h-4"
+            />
+            <span className="whitespace-nowrap">{influence.name}</span>
           </button>
         ))}
       </div>

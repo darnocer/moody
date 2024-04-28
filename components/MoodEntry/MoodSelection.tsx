@@ -36,12 +36,12 @@ const MoodSelection: React.FC<Props> = (props) => {
 
   return (
     <div>
-      <h2 className="text-2xl mb-4">{props.heading}</h2>
-      <div className="flex space-x-4">
+      <h2 className="text-2xl my-4">{props.heading}</h2>
+      <div className="flex space-x-4 justify-center">
         {props.moods.map((mood, index) => (
-          <div key={mood.id} className="flex flex-col items-center">
+          <div key={mood.id} className="flex flex-col items-center p-1">
             <button
-              className={`relative w-12 h-12 rounded-full focus:outline-none ${
+              className={`relative w-12 h-12 rounded-full focus:outline-none shadow-md hover:shadow-xl ${
                 moodColors[mood.mood_level - 1]
               } ${
                 props.selectedMood && props.selectedMood.id !== mood.id

@@ -42,7 +42,7 @@ const FeelingSelection: React.FC<Props> = (props) => {
 
   return (
     <div>
-      <h2 className="text-2xl mb-4">{props.heading}</h2>
+      <h2 className="text-2xl my-4">{props.heading}</h2>
       <div className="grid grid-cols-4 gap-4">
         {feelings.map((feeling) => (
           <button

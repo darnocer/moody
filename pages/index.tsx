@@ -105,54 +105,56 @@ const MoodEntry: React.FC<Props> = (props) => {
   return (
     <Layout>
       <div className="page relative">
-        <main>
-          <h1 className="text-h1 text-primary-500">{moodEntries.heading}</h1>
-          <MoodSelection
-            moods={props.moods}
-            onMoodSelection={handleMoodSelection}
-            heading={moodEntries.mood.heading}
-            selectedMood={selectedMood}
-          />
-          {selectedMood && (
-            <>
-              <JournalEntry
-                selectedMood={selectedMood}
-                onJournalEntryChange={setJournalEntry}
-                textBefore={moodEntries.journal.linkTextBefore}
-                textAfter={moodEntries.journal.linkTextAfter}
-              />
-              <InfluenceSelection
-                influences={props.influences}
-                onInfluenceSelection={handleInfluenceSelection}
-                heading={moodEntries.influences.heading}
-              />
-              <FeelingSelection
-                selectedMoodId={selectedMood.mood_level}
-                onFeelingSelection={handleFeelingSelection}
-                heading={moodEntries.feelings.heading}
-              />
-              <button
-                onClick={handleSubmit}
-                className={`btn btn-success ${isSubmitting ? "loading" : ""}`}
-                disabled={isSubmitting}
-              >
-                {isSubmitting
-                  ? moodEntries.submit.loadingText
-                  : moodEntries.submit.button}
-              </button>
-            </>
-          )}
-        </main>
-      </div>
-      {showSuccessMessage && (
-        <div className="toast toast-top toast-center">
-          <div className="alert alert-success">
-            <div>
-              <span>{moodEntries.submit.successMessage}</span>
+        <div className="max-w-xl mx-auto">
+          <main>
+            <h1 className="text-h1 text-primary-500">{moodEntries.heading}</h1>
+            <MoodSelection
+              moods={props.moods}
+              onMoodSelection={handleMoodSelection}
+              heading={moodEntries.mood.heading}
+              selectedMood={selectedMood}
+            />
+            {selectedMood && (
+              <>
+                <InfluenceSelection
+                  influences={props.influences}
+                  onInfluenceSelection={handleInfluenceSelection}
+                  heading={moodEntries.influences.heading}
+                />
+                <FeelingSelection
+                  selectedMoodId={selectedMood.mood_level}
+                  onFeelingSelection={handleFeelingSelection}
+                  heading={moodEntries.feelings.heading}
+                />
+                <JournalEntry
+                  selectedMood={selectedMood}
+                  onJournalEntryChange={setJournalEntry}
+                  textBefore={moodEntries.journal.linkTextBefore}
+                  textAfter={moodEntries.journal.linkTextAfter}
+                />
+                <button
+                  onClick={handleSubmit}
+                  className={`btn btn-success ${isSubmitting ? "loading" : ""}`}
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting
+                    ? moodEntries.submit.loadingText
+                    : moodEntries.submit.button}
+                </button>
+              </>
+            )}
+          </main>
+        </div>
+        {showSuccessMessage && (
+          <div className="toast toast-top toast-center">
+            <div className="alert alert-success">
+              <div>
+                <span>{moodEntries.submit.successMessage}</span>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </Layout>
   );
 };

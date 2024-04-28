@@ -27,6 +27,14 @@ module.exports = {
   },
   plugins: [require("daisyui")],
   daisyui: {
-    themes: ["light"],
+    themes: [
+      {
+        mytheme: {
+          primary: colors.emerald[500],
+          "primary-focus": colors.emerald[600],
+          neutral: colors.neutral[900],
+        },
+      },
+    ],
   },
 };
