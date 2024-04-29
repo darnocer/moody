@@ -1,8 +1,32 @@
 import { useEffect, useState } from "react";
 import Layout from "../components/Layout";
 
+interface Mood {
+  id: string;
+  name: string;
+}
+
+interface Influence {
+  id: string;
+  name: string;
+}
+
+interface Feeling {
+  id: string;
+  name: string;
+}
+
+interface MoodEntry {
+  id: string;
+  timestamp: string;
+  mood: Mood;
+  influences: { influence: Influence }[];
+  feelings: { feeling: Feeling }[];
+  journal_entry: string | null;
+}
+
 function MoodEntriesList() {
-  const [moodEntries, setMoodEntries] = useState([]);
+  const [moodEntries, setMoodEntries] = useState<MoodEntry[]>([]);
 
   useEffect(() => {
     const fetchMoodEntries = async () => {

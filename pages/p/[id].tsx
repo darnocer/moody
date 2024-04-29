@@ -1,3 +1,5 @@
+// /pages/p/[id].tsx
+
 import React from "react";
 import { GetServerSideProps } from "next";
 import ReactMarkdown from "react-markdown";
@@ -7,19 +9,34 @@ import { PostProps } from "../../components/Post";
 import { useSession } from "next-auth/react";
 import prisma from "../../lib/prisma";
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps<PostProps> = async ({
+  params,
+}) => {
   const post = await prisma.post.findUnique({
     where: {
       id: String(params?.id),
     },
     include: {
       author: {
-        select: { name: true, email: true },
+        select: {
+          name: true,
+          email: true,
+        },
       },
     },
   });
+
+  if (!post) {
+    return {
+      notFound: true,
+    };
+  }
+
   return {
-    props: post,
+    props: {
+      ...post,
+      content: post.content || "",
+    },
   };
 };
 

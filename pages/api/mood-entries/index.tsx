@@ -12,7 +12,7 @@ export default async function handler(
     const session = await getServerSession(req, res, authOptions);
     console.log("Session:", session);
 
-    if (!session) {
+    if (!session || !session.user || !session.user.email) {
       return res.status(401).json({ message: "Unauthorized" });
     }
 

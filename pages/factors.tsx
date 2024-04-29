@@ -2,12 +2,20 @@
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import prisma from "../lib/prisma";
-
 import Layout from "../components/Layout";
 
-export default function FactorsPage({ factors }) {
+interface Factor {
+  id: string;
+  name: string;
+}
+
+interface FactorsPageProps {
+  factors: Factor[];
+}
+
+export default function FactorsPage({ factors }: FactorsPageProps) {
   const { data: session } = useSession();
-  const [selectedFactors, setSelectedFactors] = useState([]);
+  const [selectedFactors, setSelectedFactors] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchSelectedFactors = async () => {
@@ -21,9 +29,8 @@ export default function FactorsPage({ factors }) {
     }
   }, [session]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     await fetch("/api/factors", {
       method: "POST",
       headers: {
@@ -68,6 +75,8 @@ export default function FactorsPage({ factors }) {
 export async function getServerSideProps() {
   const factors = await prisma.additionalFactor.findMany();
   return {
-    props: { factors },
+    props: {
+      factors,
+    },
   };
 }

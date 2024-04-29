@@ -1,9 +1,14 @@
+import { NextApiRequest, NextApiResponse } from "next";
+
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../auth/[...nextauth]";
 
 import prisma from "../../../lib/prisma";
 
-export default async function handle(req, res) {
+export default async function handle(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   if (req.method !== "POST") {
     res.setHeader("Allow", ["POST"]);
     return res.status(405).end(`Method ${req.method} Not Allowed`);
@@ -27,10 +32,15 @@ export default async function handle(req, res) {
       },
     });
     return res.json(result);
-  } catch (error) {
-    console.error("Error in post creation:", error.message, error.stack);
-    return res
-      .status(500)
-      .json({ error: "Failed to create post.", details: error.message });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error("Error in post creation:", error.message, error.stack);
+      return res
+        .status(500)
+        .json({ error: "Failed to create post.", details: error.message });
+    } else {
+      console.error("Unknown error in post creation:", error);
+      return res.status(500).json({ error: "Failed to create post." });
+    }
   }
 }
