@@ -41,20 +41,28 @@ const FeelingSelection: React.FC<Props> = (props) => {
   };
 
   return (
-    <div className="text-center">
-      <h2 className="text-2xl my-6">{props.heading}</h2>
+    <div className="text-center mb-8">
+      <h2 className="text-xl my-6">{props.heading}</h2>
       <div className="grid grid-cols-4 gap-4">
         {feelings.map((feeling) => (
           <button
             key={feeling.id}
-            className={`btn ${
+            className={`btn btn-primary btn-outline ${
               selectedFeelings.some((f) => f.id === feeling.id)
-                ? "btn-primary"
-                : "btn-neutral"
+                ? "bg-primary-500 text-white"
+                : ""
             }`}
             onClick={() => handleFeelingToggle(feeling)}
           >
-            {feeling.name}
+            <span
+              className={`whitespace-nowrap ${
+                selectedFeelings.some((f) => f.id === feeling.id)
+                  ? "text-white"
+                  : "text-neutral-900"
+              }`}
+            >
+              {feeling.name}
+            </span>
           </button>
         ))}
       </div>

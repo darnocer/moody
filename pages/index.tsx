@@ -107,36 +107,33 @@ const MoodEntry: React.FC<Props> = (props) => {
 
   return (
     <Layout>
-      <div className="page relative max-w-xl mx-auto">
-        <main className="card shadow-xl bg-neutral-100">
-          <div className="card-body">
-            {/* <h1 className="card-title text-h1 text-primary-500">
-              {moodEntries.heading}
-            </h1> */}
-            <MoodSelection
-              moods={props.moods}
-              onMoodSelection={handleMoodSelection}
-              heading={moodEntries.mood.heading}
-              selectedMood={selectedMood}
-            />
-            {selectedMood && (
-              <>
-                <InfluenceSelection
-                  influences={props.influences}
-                  onInfluenceSelection={handleInfluenceSelection}
-                  heading={moodEntries.influences.heading}
-                />
-                <FeelingSelection
-                  selectedMoodId={selectedMood.mood_level}
-                  onFeelingSelection={handleFeelingSelection}
-                  heading={moodEntries.feelings.heading}
-                />
-                <JournalEntry
-                  selectedMood={selectedMood}
-                  onJournalEntryChange={setJournalEntry}
-                  textBefore={moodEntries.journal.linkTextBefore}
-                  textAfter={moodEntries.journal.linkTextAfter}
-                />
+      <main className="bg-white md:shadow-xl md:rounded-lg md:p-16 md:bg-neutral-100">
+        <div>
+          <MoodSelection
+            moods={props.moods}
+            onMoodSelection={handleMoodSelection}
+            heading={moodEntries.mood.heading}
+            selectedMood={selectedMood}
+          />
+          {selectedMood && (
+            <>
+              <InfluenceSelection
+                influences={props.influences}
+                onInfluenceSelection={handleInfluenceSelection}
+                heading={moodEntries.influences.heading}
+              />
+              <FeelingSelection
+                selectedMoodId={selectedMood.mood_level}
+                onFeelingSelection={handleFeelingSelection}
+                heading={moodEntries.feelings.heading}
+              />
+              <JournalEntry
+                selectedMood={selectedMood}
+                onJournalEntryChange={setJournalEntry}
+                textBefore={moodEntries.journal.linkTextBefore}
+                textAfter={moodEntries.journal.linkTextAfter}
+              />
+              <div className="text-center">
                 <button
                   onClick={handleSubmit}
                   className={`btn btn-success ${isSubmitting ? "loading" : ""}`}
@@ -146,11 +143,12 @@ const MoodEntry: React.FC<Props> = (props) => {
                     ? moodEntries.submit.loadingText
                     : moodEntries.submit.button}
                 </button>
-              </>
-            )}
-          </div>
-        </main>
-      </div>
+              </div>
+            </>
+          )}
+        </div>
+      </main>
+
       {showSuccessMessage && (
         <div className="toast toast-top toast-center">
           <div className="alert alert-success">

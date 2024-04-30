@@ -26,7 +26,7 @@ function CurrentDateTime() {
     };
   }, []);
 
-  return <div className="my-4">{currentDateTime}</div>;
+  return <div className="my-4 text-neutral-600">{currentDateTime}</div>;
 }
 
 export default CurrentDateTime;

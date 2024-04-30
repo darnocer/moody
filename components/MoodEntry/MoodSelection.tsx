@@ -21,11 +21,11 @@ type Props = {
 
 const MoodSelection: React.FC<Props> = (props) => {
   const moodColors = [
-    "bg-secondary-600",
-    "bg-secondary-500",
-    "bg-lime-400",
-    "bg-primary-500",
-    "bg-primary-600",
+    "secondary-600",
+    "secondary-500",
+    "lime-400",
+    "primary-500",
+    "primary-600",
   ];
 
   const moodIcons = [
@@ -37,14 +37,14 @@ const MoodSelection: React.FC<Props> = (props) => {
   ];
 
   return (
-    <div className="text-center">
+    <div className="text-center mb-12">
       <h2 className="text-2xl my-6">{props.heading}</h2>
       <CurrentDateTime />
-      <div className="flex space-x-4 justify-center">
+      <div className="flex justify-between space-x-2 md:space-x-4">
         {props.moods.map((mood, index) => (
           <div key={mood.id} className="flex flex-col items-center p-1">
             <button
-              className={`relative w-12 h-12 rounded-full focus:outline-none shadow-md hover:shadow-xl ${
+              className={`relative w-16 h-16 md:w-20 md:h-20 rounded-full focus:outline-none shadow-md hover:shadow-xl bg-${
                 moodColors[mood.mood_level - 1]
               } ${
                 props.selectedMood && props.selectedMood.id !== mood.id
@@ -55,7 +55,7 @@ const MoodSelection: React.FC<Props> = (props) => {
             >
               <FontAwesomeIcon
                 icon={moodIcons[mood.mood_level - 1]}
-                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12"
+                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 md:w-20 md:h-20"
               />
               <span className="sr-only">{mood.name}</span>
             </button>
@@ -64,7 +64,7 @@ const MoodSelection: React.FC<Props> = (props) => {
                 props.selectedMood && props.selectedMood.id !== mood.id
                   ? "opacity-10"
                   : ""
-              }`}
+              } text-${moodColors[mood.mood_level - 1]}`}
             >
               {mood.name}
             </span>
