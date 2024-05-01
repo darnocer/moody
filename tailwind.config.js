@@ -10,7 +10,7 @@ module.exports = {
     extend: {
       colors: {
         primary: colors.emerald,
-        secondary: colors.cyan,
+        secondary: colors.blue,
       },
       fontFamily: {
         sans: ["Lexend", ...defaultTheme.fontFamily.sans],
