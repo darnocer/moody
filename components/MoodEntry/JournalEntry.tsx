@@ -39,7 +39,7 @@ const JournalEntry: React.FC<Props> = (props) => {
   };
 
   return (
-    <div className="mb-12 text-center">
+    <div className="mb-8 text-center">
       <button className="btn btn-link text-base" onClick={openModal}>
         <FontAwesomeIcon icon={faPenToSquare} />
         {savedEntry ? props.textAfter : props.textBefore}

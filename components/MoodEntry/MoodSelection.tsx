@@ -20,12 +20,20 @@ type Props = {
 };
 
 const MoodSelection: React.FC<Props> = (props) => {
-  const moodColors = [
-    "secondary-600",
-    "secondary-500",
-    "lime-400",
-    "primary-500",
-    "primary-600",
+  const moodBgColors = [
+    "bg-secondary-700",
+    "bg-secondary-500",
+    "bg-yellow-500",
+    "bg-primary-500",
+    "bg-primary-700",
+  ];
+
+  const moodTextColors = [
+    "text-secondary-700",
+    "text-secondary-500",
+    "text-yellow-500",
+    "text-primary-500",
+    "text-primary-700",
   ];
 
   const moodIcons = [
@@ -44,8 +52,8 @@ const MoodSelection: React.FC<Props> = (props) => {
         {props.moods.map((mood, index) => (
           <div key={mood.id} className="flex flex-col items-center p-1">
             <button
-              className={`relative w-16 h-16 md:w-20 md:h-20 rounded-full focus:outline-none shadow-md hover:shadow-xl bg-${
-                moodColors[mood.mood_level - 1]
+              className={`relative w-16 h-16 md:w-20 md:h-20 rounded-full focus:outline-none shadow-md hover:shadow-xl ${
+                moodBgColors[mood.mood_level - 1]
               } ${
                 props.selectedMood && props.selectedMood.id !== mood.id
                   ? "opacity-10"
@@ -64,7 +72,7 @@ const MoodSelection: React.FC<Props> = (props) => {
                 props.selectedMood && props.selectedMood.id !== mood.id
                   ? "opacity-10"
                   : ""
-              } text-${moodColors[mood.mood_level - 1]}`}
+              } ${moodTextColors[mood.mood_level - 1]}`}
             >
               {mood.name}
             </span>
