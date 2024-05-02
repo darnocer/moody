@@ -92,7 +92,7 @@ const MoodEntry: React.FC<Props> = (props) => {
 
   return (
     <Layout>
-      <main className="bg-white md:shadow-xl md:rounded-lg md:p-16 md:bg-neutral-100">
+      <main className="bg-white md:shadow-xl md:rounded-lg md:p-16 md:bg-neutral-100 mb-16">
         <div>
           <MoodSelection
             moods={props.moods}
