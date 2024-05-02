@@ -1,29 +1,8 @@
+// /pages/entries.tsx
 import { useEffect, useState } from "react";
-import Layout from "../components/Layout";
-
-interface Mood {
-  id: string;
-  name: string;
-}
-
-interface Influence {
-  id: string;
-  name: string;
-}
-
-interface Feeling {
-  id: string;
-  name: string;
-}
-
-interface MoodEntry {
-  id: string;
-  timestamp: string;
-  mood: Mood;
-  influences: { influence: Influence }[];
-  feelings: { feeling: Feeling }[];
-  journal_entry: string | null;
-}
+import { Mood, Influence, Feeling, MoodEntry } from "../types";
+import Layout from "../components/Layout/Layout";
+import EntryItem from "../components/Entries/EntryItem";
 
 function MoodEntriesList() {
   const [moodEntries, setMoodEntries] = useState<MoodEntry[]>([]);
@@ -37,32 +16,67 @@ function MoodEntriesList() {
     fetchMoodEntries();
   }, []);
 
+  const groupEntriesByMonth = (entries: MoodEntry[]) => {
+    const groupedEntries: { [month: string]: { [date: string]: MoodEntry[] } } =
+      {};
+
+    entries.forEach((entry) => {
+      const date = new Date(entry.timestamp);
+      const month = date.toLocaleString("default", {
+        month: "long",
+        year: "numeric",
+      });
+      const day = date.toLocaleDateString("en-US", {
+        weekday: "long",
+        month: "long",
+        day: "numeric",
+      });
+
+      if (month in groupedEntries) {
+        if (day in groupedEntries[month]) {
+          groupedEntries[month][day].push(entry);
+        } else {
+          groupedEntries[month][day] = [entry];
+        }
+      } else {
+        groupedEntries[month] = {
+          [day]: [entry],
+        };
+      }
+    });
+
+    return groupedEntries;
+  };
+
+  const groupedEntriesByMonth = groupEntriesByMonth(moodEntries);
+
   return (
     <Layout>
-      <h1 className="text-h1">Mood Entries</h1>
-      <div className="space-y-4">
-        {moodEntries.map((entry, index) => (
-          <div key={entry.id} className="collapse collapse-arrow bg-base-100">
-            <input type="radio" name="mood-entry-accordion" />
-            <div className="collapse-title text-xl font-medium">
-              {new Date(entry.timestamp).toLocaleString()}
+      <div className="space-y-8 mb-16">
+        {Object.entries(groupedEntriesByMonth).map(
+          ([month, groupedEntriesByDate]) => (
+            <div key={month}>
+              <h2 className="text-center text-2xl font-bold mb-4">{month}</h2>
+              <div className="space-y-4">
+                {Object.entries(groupedEntriesByDate).map(([date, entries]) => (
+                  <div
+                    key={date}
+                    className="bg-base-100 p-4 rounded-lg shadow-md"
+                  >
+                    <h3 className="text-xl font-medium mb-4">{date}</h3>
+                    {entries.map((entry, index) => (
+                      <EntryItem
+                        key={entry.id}
+                        entry={entry}
+                        isLast={index === entries.length - 1}
+                      />
+                    ))}
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="collapse-content">
-              <p>Mood: {entry.mood.name}</p>
-              <p>
-                Influences:{" "}
-                {entry.influences.map((inf) => inf.influence.name).join(", ")}
-              </p>
-              <p>
-                Feelings:{" "}
-                {entry.feelings.map((feel) => feel.feeling.name).join(", ")}
-              </p>
-              {entry.journal_entry && (
-                <p>Journal Entry: {entry.journal_entry}</p>
-              )}
-            </div>
-          </div>
-        ))}
+          )
+        )}
       </div>
     </Layout>
   );
