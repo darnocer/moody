@@ -1,6 +1,7 @@
 // components/FeelingSelection.tsx
 import React, { useState, useEffect } from "react";
-import { FeelingProps } from "../../pages/index";
+import { FeelingProps } from "../../types";
+import SelectionButton from "../Global/SelectionButton";
 
 type Props = {
   selectedMoodId: number;
@@ -24,7 +25,6 @@ const FeelingSelection: React.FC<Props> = (props) => {
         console.error("Error fetching feelings:", error);
       }
     };
-
     if (props.selectedMoodId) {
       fetchFeelings();
     }
@@ -45,25 +45,12 @@ const FeelingSelection: React.FC<Props> = (props) => {
       <h2 className="text-xl my-6">{props.heading}</h2>
       <div className="grid grid-cols-4 gap-4">
         {feelings.map((feeling) => (
-          <button
+          <SelectionButton
             key={feeling.id}
-            className={`btn btn-primary btn-outline ${
-              selectedFeelings.some((f) => f.id === feeling.id)
-                ? "bg-primary-500 text-white"
-                : ""
-            }`}
+            text={feeling.name}
+            isSelected={selectedFeelings.some((f) => f.id === feeling.id)}
             onClick={() => handleFeelingToggle(feeling)}
-          >
-            <span
-              className={`whitespace-nowrap ${
-                selectedFeelings.some((f) => f.id === feeling.id)
-                  ? "text-white"
-                  : "text-neutral-900"
-              }`}
-            >
-              {feeling.name}
-            </span>
-          </button>
+          />
         ))}
       </div>
     </div>

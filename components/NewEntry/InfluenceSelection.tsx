@@ -2,11 +2,9 @@
 import React, { useState } from "react";
 import { InfluenceProps } from "../../pages/index";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { library, IconName } from "@fortawesome/fontawesome-svg-core";
-import { fas } from "@fortawesome/free-solid-svg-icons";
+import { IconName } from "@fortawesome/fontawesome-svg-core";
 
-library.add(fas);
+import SelectionButton from "../Global/SelectionButton";
 
 type Props = {
   influences: InfluenceProps[];
@@ -36,33 +34,13 @@ const InfluenceSelection: React.FC<Props> = (props) => {
       <h2 className="text-xl my-6">{props.heading}</h2>
       <div className="grid grid-cols-2 gap-4">
         {props.influences.map((influence) => (
-          <button
+          <SelectionButton
             key={influence.id}
-            className={`btn btn-outline btn-primary flex items-center space-x-2 text-neutral-900 hover:text-white ${
-              selectedInfluences.some((i) => i.id === influence.id)
-                ? "bg-primary-500 text-white"
-                : ""
-            }`}
+            text={influence.name}
+            icon={influence.icon as IconName}
+            isSelected={selectedInfluences.some((i) => i.id === influence.id)}
             onClick={() => handleInfluenceToggle(influence)}
-          >
-            <FontAwesomeIcon
-              icon={["fas", influence.icon as IconName]}
-              className={`w-5 h-5 ${
-                selectedInfluences.some((i) => i.id === influence.id)
-                  ? "text-white"
-                  : "text-neutral-900"
-              }`}
-            />
-            <span
-              className={`whitespace-nowrap ${
-                selectedInfluences.some((i) => i.id === influence.id)
-                  ? "text-white"
-                  : "text-neutral-900"
-              }`}
-            >
-              {influence.name}
-            </span>
-          </button>
+          />
         ))}
       </div>
     </div>
