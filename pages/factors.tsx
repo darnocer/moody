@@ -2,7 +2,7 @@
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import prisma from "../lib/prisma";
-import Layout from "../components/Layout";
+import Layout from "../components/Layout/Layout";
 
 interface Factor {
   id: string;

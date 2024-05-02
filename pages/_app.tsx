@@ -1,7 +1,7 @@
 import { SessionProvider } from "next-auth/react";
 import { AppProps } from "next/app";
 
-import SplashScreen from "../components/SplashScreen";
+import SplashScreen from "../components/Layout/SplashScreen";
 
 import "../styles/globals.css";
 

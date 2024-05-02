@@ -5,29 +5,14 @@ import prisma from "../lib/prisma";
 
 import moodEntries from "../data/moodEntries";
 
-import Layout from "../components/Layout";
+import { MoodProps, InfluenceProps, FeelingProps } from "../types";
 
-import MoodSelection from "../components/MoodEntry/MoodSelection";
-import JournalEntry from "../components/MoodEntry/JournalEntry";
-import InfluenceSelection from "../components/MoodEntry/InfluenceSelection";
-import FeelingSelection from "../components/MoodEntry/FeelingSelection";
+import Layout from "../components/Layout/Layout";
 
-export type MoodProps = {
-  id: string;
-  mood_level: number;
-  name: string;
-};
-
-export type InfluenceProps = {
-  id: string;
-  name: string;
-  icon: string;
-};
-
-export type FeelingProps = {
-  id: string;
-  name: string;
-};
+import MoodSelection from "../components/NewEntry/MoodSelection";
+import JournalEntry from "../components/NewEntry/JournalEntry";
+import InfluenceSelection from "../components/NewEntry/InfluenceSelection";
+import FeelingSelection from "../components/NewEntry/FeelingSelection";
 
 export const getStaticProps: GetStaticProps = async () => {
   const moods = await prisma.mood.findMany({
