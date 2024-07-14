@@ -6,6 +6,14 @@ Moody is a simple Mood Tracking app! Keep track of timestamped mood entries, and
 
 **Demo:** https://moody-me.vercel.app/
 
+![MoodSelection](./public/assets/MoodSelection.png)
+
+![MoodEntry](./public/assets/MoodEntry.png)
+
+![JournalEntry](./public/assets/JournalEntry.png)
+
+![Entries](./public/assets/Entries.png)
+
 ## Features
 
 - NextAuth with Google
