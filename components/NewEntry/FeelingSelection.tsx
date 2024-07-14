@@ -31,13 +31,14 @@ const FeelingSelection: React.FC<Props> = (props) => {
   }, [props.selectedMoodId]);
 
   const handleFeelingToggle = (feeling: FeelingProps) => {
-    const index = selectedFeelings.findIndex((f) => f.id === feeling.id);
-    if (index !== -1) {
-      setSelectedFeelings(selectedFeelings.filter((f) => f.id !== feeling.id));
-    } else {
-      setSelectedFeelings([...selectedFeelings, feeling]);
-    }
-    props.onFeelingSelection(selectedFeelings);
+    const newSelectedFeelings = selectedFeelings.find(
+      (f) => f.id === feeling.id
+    )
+      ? selectedFeelings.filter((f) => f.id !== feeling.id)
+      : [...selectedFeelings, feeling];
+
+    setSelectedFeelings(newSelectedFeelings);
+    props.onFeelingSelection(newSelectedFeelings);
   };
 
   return (

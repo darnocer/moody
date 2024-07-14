@@ -1,9 +1,7 @@
 // components/InfluenceSelection.tsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { InfluenceProps } from "../../types";
-
 import { IconName } from "@fortawesome/fontawesome-svg-core";
-
 import SelectionButton from "../Global/SelectionButton";
 
 type Props = {
@@ -18,15 +16,14 @@ const InfluenceSelection: React.FC<Props> = (props) => {
   >([]);
 
   const handleInfluenceToggle = (influence: InfluenceProps) => {
-    const index = selectedInfluences.findIndex((i) => i.id === influence.id);
-    if (index !== -1) {
-      setSelectedInfluences(
-        selectedInfluences.filter((i) => i.id !== influence.id)
-      );
-    } else {
-      setSelectedInfluences([...selectedInfluences, influence]);
-    }
-    props.onInfluenceSelection(selectedInfluences);
+    const newSelectedInfluences = selectedInfluences.find(
+      (i) => i.id === influence.id
+    )
+      ? selectedInfluences.filter((i) => i.id !== influence.id)
+      : [...selectedInfluences, influence];
+
+    setSelectedInfluences(newSelectedInfluences);
+    props.onInfluenceSelection(newSelectedInfluences);
   };
 
   return (
