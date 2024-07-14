@@ -1,4 +1,4 @@
-// EntryItem.tsx
+// components/EntryItem.tsx
 import React from "react";
 import { MoodEntry } from "../../types";
 import SmileyFace from "../Global/SmileyFace";
@@ -37,27 +37,28 @@ const EntryItem: React.FC<EntryItemProps> = ({ entry, isLast }) => {
             />
             <span className="text-gray-500">{formatTime(entry.timestamp)}</span>
           </div>
-          <div>
+          <div className="mt-1">
             {entry.influences.length > 0 && (
-              <span>
+              <p className="text-gray-600">
+                <span className="font-bold">Influences: </span>
                 {entry.influences.map((inf, index) => (
                   <React.Fragment key={inf.influence.id}>
                     {inf.influence.name}
                     {index !== entry.influences.length - 1 && " • "}
                   </React.Fragment>
                 ))}
-              </span>
+              </p>
             )}
-            {entry.influences.length > 0 && entry.feelings.length > 0 && " • "}
             {entry.feelings.length > 0 && (
-              <span>
+              <p className="text-gray-600">
+                <span className="font-bold">Feelings: </span>
                 {entry.feelings.map((feel, index) => (
                   <React.Fragment key={feel.feeling.id}>
                     {feel.feeling.name}
                     {index !== entry.feelings.length - 1 && " • "}
                   </React.Fragment>
                 ))}
-              </span>
+              </p>
             )}
           </div>
           {entry.journal_entry && (
