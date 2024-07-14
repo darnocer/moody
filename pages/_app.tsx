@@ -1,19 +1,17 @@
-import { SessionProvider } from "next-auth/react";
-import { AppProps } from "next/app";
-
-import SplashScreen from "../components/Layout/SplashScreen";
-
+// pages/_app.tsx
 import "../styles/globals.css";
+import type { AppProps } from "next/app";
+import { SessionProvider } from "next-auth/react";
+import { ToastProvider } from "../components/Context/ToastContext";
 
-const App = ({ Component, pageProps }: AppProps) => {
+function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <>
-      <SplashScreen />
-      <SessionProvider session={pageProps.session}>
+    <SessionProvider session={pageProps.session}>
+      <ToastProvider>
         <Component {...pageProps} />
-      </SessionProvider>
-    </>
+      </ToastProvider>
+    </SessionProvider>
   );
-};
+}
 
-export default App;
+export default MyApp;

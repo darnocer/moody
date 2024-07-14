@@ -1,16 +1,27 @@
 import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
+import { useToast } from "../Context/ToastContext";
 
 const BottomNav: React.FC = () => {
   const router = useRouter();
+  const { data: session, status } = useSession();
+  const { showToast } = useToast();
+
+  const handleEntriesClick = (e: React.MouseEvent) => {
+    if (status !== "authenticated") {
+      e.preventDefault();
+      showToast("Please log in to access entries.");
+    }
+  };
 
   return (
-    <div className="btm-nav">
+    <div className="btm-nav flex justify-center items-center py-2 space-x-4 border-t border-gray-300">
       <Link href="/">
         <button
           className={`flex flex-col items-center ${
-            router.pathname === "/" ? "" : "text-gray-400 pointer-events-none"
+            router.pathname === "/" ? "text-black" : "text-gray-400"
           }`}
         >
           <svg
@@ -30,12 +41,14 @@ const BottomNav: React.FC = () => {
           <span className="btm-nav-label">New</span>
         </button>
       </Link>
+
+      {/* <div className="border-l border-gray-300 h-6"></div> */}
+
       <Link href="/entries">
         <button
+          onClick={handleEntriesClick}
           className={`flex flex-col items-center ${
-            router.pathname === "/entries"
-              ? ""
-              : "text-gray-400 pointer-events-none"
+            router.pathname === "/entries" ? "text-black" : "text-gray-400"
           }`}
         >
           <svg
@@ -53,56 +66,6 @@ const BottomNav: React.FC = () => {
             />
           </svg>
           <span className="btm-nav-label">Entries</span>
-        </button>
-      </Link>
-      <Link href="/factors">
-        <button
-          className={`flex flex-col items-center ${
-            router.pathname === "/factors"
-              ? ""
-              : "text-gray-400 pointer-events-none"
-          }`}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M9 5l7 7-7 7"
-            />
-          </svg>
-          <span className="btm-nav-label">Habits</span>
-        </button>
-      </Link>
-      <Link href="/profile">
-        <button
-          className={`flex flex-col items-center ${
-            router.pathname === "/profile"
-              ? ""
-              : "text-gray-400 pointer-events-none"
-          }`}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-            />
-          </svg>
-          <span className="btm-nav-label">Profile</span>
         </button>
       </Link>
     </div>
