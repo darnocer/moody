@@ -1,6 +1,7 @@
 // pages/index.tsx
 import React, { useState } from "react";
 import { GetStaticProps } from "next";
+import { useSession } from "next-auth/react";
 import prisma from "../lib/prisma";
 
 import moodEntries from "../data/moodEntries";
@@ -13,6 +14,7 @@ import MoodSelection from "../components/NewEntry/MoodSelection";
 import JournalEntry from "../components/NewEntry/JournalEntry";
 import InfluenceSelection from "../components/NewEntry/InfluenceSelection";
 import FeelingSelection from "../components/NewEntry/FeelingSelection";
+import { useToast } from "../components/Context/ToastContext";
 
 export const getStaticProps: GetStaticProps = async () => {
   const moods = await prisma.mood.findMany({
@@ -40,7 +42,14 @@ const MoodEntry: React.FC<Props> = (props) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
+  const { data: session, status } = useSession();
+  const { showToast } = useToast();
+
   const handleMoodSelection = (mood: MoodProps) => {
+    if (status !== "authenticated") {
+      showToast("Please log in to make an entry.");
+      return;
+    }
     setSelectedMood(mood);
   };
 
