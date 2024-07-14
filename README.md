@@ -1,10 +1,17 @@
 # Moody
 
-## 🚧 Under Construction 🚧
-
 <img src="https://img.shields.io/badge/next%20js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white"> &nbsp; <img src="https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white"> &nbsp; <img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white"> &nbsp; <img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white"> &nbsp; <img src="https://img.shields.io/badge/Google_Cloud-4285F4?style=for-the-badge&logo=google-cloud&logoColor=white"> &nbsp; <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white"> &nbsp; <img src="https://img.shields.io/badge/daisyUI-1ad1a5?style=for-the-badge&logo=daisyui&logoColor=white"> &nbsp; <img src="https://img.shields.io/badge/Font_Awesome-339AF0?style=for-the-badge&logo=fontawesome&logoColor=white">
 
-Moody is a simple open-source Mood Tracking app.
+Moody is a simple Mood Tracking app! Keep track of timestamped mood entries, and associated feelings, influences, and notes.
+
+**Demo:** https://moody-me.vercel.app/
+
+## Features
+
+- NextAuth with Google
+- Track mood, influences, feelings, and journal entries
+- View historical entries
+- Delete mood entries
 
 ## Development
 
@@ -96,19 +103,3 @@ _Your PostgresSQL variables should already be setup in Vercel._
 
 1. In Vercel, go to Settings > Environment Variables
 2. Add the variables you added to `.env` above
-
-## Todo
-
-- [ ] Prompt user to login if unauthernticated
-- [ ] Add a logo
-- [ ] Style Mood Entry screen for mobile phone
-- [ ] Style /entries for mobile phone
-- [ ] Style individual mood entries
-- [ ] Create bottom nav bar
-- [ ] Style login screen
-- [ ] Implement notifications
-- [ ] Fix latency on /entries
-- [ ] Implement DELETE functionality on /entries
-- [ ] Add Addiitonal Factors entries
-- [ ] Group entries by date, show additional factors for date
-- [ ] Customizable list of factors
