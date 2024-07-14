@@ -3,7 +3,11 @@ import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
 
 const Header: React.FC = () => {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
+
+  const handleSignOut = () => {
+    signOut({ callbackUrl: "/" });
+  };
 
   return (
     <header>
@@ -28,7 +32,7 @@ const Header: React.FC = () => {
                 {session.user.name} ({session.user.email})
               </span>
               <button
-                onClick={() => signOut()}
+                onClick={handleSignOut}
                 className="text-gray-800 hover:text-gray-600"
               >
                 Log Out
