@@ -1,6 +1,6 @@
 // /pages/entries.tsx
 import { useEffect, useState } from "react";
-import { Mood, Influence, Feeling, MoodEntry } from "../types";
+import { MoodEntry } from "../types";
 import Layout from "../components/Layout/Layout";
 import EntryItem from "../components/Entries/EntryItem";
 
@@ -15,6 +15,15 @@ function MoodEntriesList() {
     };
     fetchMoodEntries();
   }, []);
+
+  const handleDelete = async (id: string) => {
+    await fetch(`/api/mood-entries/${id}`, {
+      method: "DELETE",
+    });
+
+    // Remove the deleted entry from the state
+    setMoodEntries(moodEntries.filter((entry) => entry.id !== id));
+  };
 
   const groupEntriesByMonth = (entries: MoodEntry[]) => {
     const groupedEntries: { [month: string]: { [date: string]: MoodEntry[] } } =
@@ -69,6 +78,7 @@ function MoodEntriesList() {
                         key={entry.id}
                         entry={entry}
                         isLast={index === entries.length - 1}
+                        onDelete={handleDelete}
                       />
                     ))}
                   </div>
